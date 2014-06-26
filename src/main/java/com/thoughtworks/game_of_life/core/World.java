@@ -21,13 +21,13 @@ public class World {
         Map<Location, Cell> newCells = initCells();
 
         for (Location location : allWorldLocations(DEFAULT_WIDTH, DEFAULT_HEIGHT)) {
-            if (cells.get(location).willBeAlive(numberOfAliveNeighbours(location))){
-                newCells.put(location, new AliveCell());
-            }
+            newCells.put(location,
+                    cells.get(location).nextState(numberOfAliveNeighbours(location)));
         }
         cells = newCells;
     }
 
+    // tutte morte
     public boolean isEmpty() {
         for (Cell cell: cells.values()) {
             if (cell.isAlive()){
@@ -64,4 +64,7 @@ public class World {
         return aliveNeighbours;
     }
 
+    public boolean isZombie(Location location) {
+        return cells.get(location).isZombie();
+    }
 }

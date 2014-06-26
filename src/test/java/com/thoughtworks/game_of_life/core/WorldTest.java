@@ -1,6 +1,7 @@
 package com.thoughtworks.game_of_life.core;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static com.thoughtworks.game_of_life.core.Location.at;
@@ -47,6 +48,20 @@ public class WorldTest {
     }
 
     @Test
+    public void live_cells_with_4_live_neighbours_should_became_zombie() {
+        world.setLiving(at(2, 3));
+
+        world.setLiving(at(2, 2));
+        world.setLiving(at(2, 4));
+        world.setLiving(at(3, 3));
+        world.setLiving(at(1, 3));
+
+        world.advance();
+
+        assertThat(world.isZombie(at(2, 3)), is(true));
+    }
+
+    @Test
     public void live_cells_with_two_live_neighbours_survives() {
         world.setLiving(at(2, 2));
         world.setLiving(at(2, 3));
@@ -69,20 +84,6 @@ public class WorldTest {
         world.advance();
 
         assertThat(world.isAlive(at(2, 3)), is(true));
-    }
-
-    @Test
-    public void live_cells_with_more_than_three_live_neighbours_dies() {
-        world.setLiving(at(2, 3));
-
-        world.setLiving(at(2, 2));
-        world.setLiving(at(2, 4));
-        world.setLiving(at(3, 3));
-        world.setLiving(at(1, 3));
-
-        world.advance();
-
-        assertThat(world.isAlive(at(2, 3)), is(false));
     }
 
     @Test
